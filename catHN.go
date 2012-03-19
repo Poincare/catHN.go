@@ -69,8 +69,8 @@ func parseHTML(r io.Reader) {
 	f(doc);
 }
 
-func catHN() {
-	res, url, error := http.Get("http://news.ycombinator.com")
+func catHN(URL string) {
+	res, url, error := http.Get(URL)
 
 	if error == nil {
 		parseHTML(res.Body)
@@ -82,5 +82,9 @@ func catHN() {
 }
 
 func main() {
-	catHN()
+
+	//give you newer news, instead of by vote, do http://news.ycombinator.com/ for regular, by-vote
+	URL = "http://news.ycombinator.com/newest")
+
+	catHN(URL)
 }
