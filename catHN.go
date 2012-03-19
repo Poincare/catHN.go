@@ -84,7 +84,7 @@ func catHN(URL string) {
 func main() {
 
 	//give you newer news, instead of by vote, do http://news.ycombinator.com/ for regular, by-vote
-	URL = "http://news.ycombinator.com/newest")
+	URL := "http://news.ycombinator.com/newest"
 
 	catHN(URL)
 }
