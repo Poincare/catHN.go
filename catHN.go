@@ -10,7 +10,7 @@ import (
 func printLenLine(str string) {
 	l_s := len(str)
 
-	for i := 0; i<l_s+2; i++ {
+	for i := 0; i < l_s+2; i++ {
 		fmt.Print("_")
 	}
 
@@ -22,8 +22,8 @@ func printBox(str string) {
 	fmt.Println("")
 	fmt.Println("")
 
-	fmt.Print("| ");
-	fmt.Print(str);
+	fmt.Print("| ")
+	fmt.Print(str)
 	fmt.Print(" |")
 
 	fmt.Println("")
@@ -38,7 +38,7 @@ func parseHTML(r io.Reader) {
 	doc, err := html.Parse(r)
 
 	if err != nil {
-		fmt.Println("Error occurred in parsing HTML!");
+		fmt.Println("Error occurred in parsing HTML!")
 		return
 	}
 
@@ -51,12 +51,12 @@ func parseHTML(r io.Reader) {
 		if i == max_stories {
 			return
 		}
-	
+
 		if n.Type == html.ElementNode && n.Data == "td" {
-			if(len(n.Attr) != 0) {
-				if(n.Attr[0].Key == "class" && n.Attr[0].Val == "title") {
+			if len(n.Attr) != 0 {
+				if n.Attr[0].Key == "class" && n.Attr[0].Val == "title" {
 					printBox(n.Child[0].Data)
-					i++;
+					i++
 				}
 			}
 		}
@@ -66,7 +66,7 @@ func parseHTML(r io.Reader) {
 		}
 	}
 
-	f(doc);
+	f(doc)
 }
 
 func catHN(URL string) {
@@ -78,7 +78,7 @@ func catHN(URL string) {
 	} else {
 		fmt.Printf("%s\n", error)
 
-	}	
+	}
 }
 
 func main() {
