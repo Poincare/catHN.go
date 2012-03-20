@@ -5,6 +5,7 @@ import (
 	"http"
 	"html"
 	"io"
+	"flag"
 )
 
 func printLenLine(str string) {
@@ -33,7 +34,7 @@ func printBox(str string) {
 	fmt.Println("")
 }
 
-func parseHTML(r io.Reader) {
+func parseHTML(r io.Reader, np int) {
 
 	doc, err := html.Parse(r)
 
@@ -45,7 +46,7 @@ func parseHTML(r io.Reader) {
 	var f func(*html.Node)
 
 	i := 0
-	max_stories := 4
+	max_stories := np 
 
 	f = func(n *html.Node) {
 		if i == max_stories {
@@ -69,11 +70,11 @@ func parseHTML(r io.Reader) {
 	f(doc)
 }
 
-func catHN(URL string) {
+func catHN(URL string, np int) {
 	res, url, error := http.Get(URL)
 
 	if error == nil {
-		parseHTML(res.Body)
+		parseHTML(res.Body, np)
 
 	} else {
 		fmt.Printf("%s\n", error)
@@ -81,10 +82,27 @@ func catHN(URL string) {
 	}
 }
 
+func parseArgs() (string, int) {
+	URL := "http://news.ycombinator.com/"
+
+	newposts := flag.Bool("new", false, "Show new posts")
+	numposts := flag.Int("posts", 5, "How many posts to show")
+
+  flag.Parse()
+
+	if *newposts {
+		fmt.Println("Newest Posts\n")
+		URL = "http://news.ycombinator.com/newest"
+
+	} else {
+		fmt.Println("Top Posts\n")
+	}
+
+	return URL, *numposts
+}
+
 func main() {
+	URL, numposts := parseArgs() 
 
-	//give you newer news, instead of by vote, do http://news.ycombinator.com/ for regular, by-vote
-	URL := "http://news.ycombinator.com/newest"
-
-	catHN(URL)
+	catHN(URL, numposts)
 }
